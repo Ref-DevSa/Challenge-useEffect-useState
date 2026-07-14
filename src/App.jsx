@@ -19,7 +19,21 @@ function App() {
     <div className="container">
       <h1>User Directory</h1>
 
-      <p>Number of users: {users.length}</p>
+      <div>
+        {users.map((user) => (
+          <div className="card" key={user.id}>
+            <h2>{user.name}</h2>
+
+            <p>
+              <strong>Email:</strong> {user.email}
+            </p>
+
+            <p>
+              <strong>Company:</strong> {user.company.name}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
