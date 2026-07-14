@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  // State for users
+  // Store users from the API
   const [users, setUsers] = useState([]);
 
-  // State for search input
+  // Store search input
   const [search, setSearch] = useState("");
 
-  // State for the Add User form
+  // Store form inputs
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  // Fetch users when the component loads
+  // Fetch users when the page loads
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
@@ -20,11 +20,11 @@ function App() {
         setUsers(data);
       })
       .catch((error) => {
-        console.log("Error fetching users:", error);
+        console.log(error);
       });
   }, []);
 
-  // Filter users based on the search input
+  // Filter users based on search input
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
   );
@@ -34,7 +34,7 @@ function App() {
     event.preventDefault();
 
     if (name.trim() === "" || email.trim() === "") {
-      alert("Please enter both name and email.");
+      alert("Please fill in all fields.");
       return;
     }
 
@@ -49,7 +49,6 @@ function App() {
 
     setUsers([newUser, ...users]);
 
-    // Clear the form
     setName("");
     setEmail("");
   }
@@ -77,7 +76,7 @@ function App() {
         <button type="submit">Add User</button>
       </form>
 
-      {/* Search Input */}
+      {/* Search */}
       <input
         className="search"
         type="text"
@@ -88,7 +87,7 @@ function App() {
 
       {/* User List */}
       {filteredUsers.length === 0 ? (
-        <p>No users found.</p>
+        <p className="no-users">No users found.</p>
       ) : (
         filteredUsers.map((user) => (
           <div className="card" key={user.id}>
